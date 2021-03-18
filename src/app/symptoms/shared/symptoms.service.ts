@@ -32,27 +32,31 @@ export class SymptomsService {
    }
 
    getById(id: string){ //buscar por Id
-
+    return this.symptomsCollection.doc<Symptoms>(id).valueChanges();
    }
 
    addSymptoms(symptoms: Symptoms){
       // 1 momento
+      this.afs.collection('symptoms').doc().set(Object.assign({}, symptoms))
+
       // console.log(symptoms)
       // return this.symptomsCollection.add(symptoms);
+
       // 2 momento
       // criar id
-      const id = this.afs.createId();
-      const { name, description } = symptoms;
+      // const id = this.afs.createId();
+      // const { name, description } = symptoms;
 
-      this.afs.collection('symptoms').doc(id).set(
-        {
-          name: name,
-          description: description,
-        }
-      )
+      // this.afs.collection('symptoms').doc(id).set(
+      //   {
+      //     name: name,
+      //     description: description,
+      //   }
+      // )
    }
 
-   updateSymptoms(){
+   updateSymptoms(symptoms: Symptoms, id: string){
+      this.symptomsCollection.doc<Symptoms>(id).update(Object.assign({}, symptoms));
 
    }
 
